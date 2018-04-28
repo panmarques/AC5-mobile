@@ -2,6 +2,7 @@ package br.com.maximus.maximus;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,10 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    SQLiteDatabase db; // Defino que BD é  o meu banco
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +25,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle params = intent.getExtras();
         String nome = params.getString("nome");
+
+        db=openOrCreateDatabase("ContatosDB", getApplicationContext().MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXIISTS contatos(nome VARCHAR, contato VARCHAR, tipo VARCHAR);");
+
 
         Button botaoLogin = (Button) findViewById(R.id.botaoLoginMaximus);
         // Button botaoCriarConta = (Button)findViewById(R.id.botaoCriarConta);
@@ -50,4 +59,5 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
 }
